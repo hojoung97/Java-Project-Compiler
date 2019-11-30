@@ -12,7 +12,7 @@ public class Main {
             String line = reader.readLine();
             while (line != null) {
                 // Print and read lines
-                System.out.println(line);
+                //System.out.println(line);
 
                 // Break up the line into words
                 line = line.trim();
@@ -22,9 +22,8 @@ public class Main {
                 // the first keyword
                 String token = tokens[0];
                 if (token != null) {
-                    if (token.matches(
-                            "decl | lab | subr | printi | jmp | cmpe | cmplt | cmpgt | pushi | popm | popv | peek | poke | swp | add | sub | mul | div")) {
-
+                    if (token.matches("decl|lab|subr|printi|jmp|cmpe|cmplt|cmpgt|pushi|popm|popv|peek|poke|swp|add|sub|mul|div")) {
+                            System.out.println(token);
                     }
                 }
 
