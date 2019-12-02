@@ -170,23 +170,35 @@ public class ByteCode {
         pc++;
     }
 
+    private void cmpe() {
+        mem.add(CMPE);
+        pc++;
+    }
+
+    private void cmpgt() {
+        mem.add(CMPGT);
+        pc++;
+    }
+
+    private void cmplt() {
+        mem.add(CMPLT);
+        pc++;
+    }
+
+    private void popm(int value) {
+        pushi(value);
+        mem.add(POPM);
+    }
+
+
+
     /*
 
     void jmp(String);
     void jmpc(String);
-    void cmpe();
-    void cmplt();
-    void cmpgt();
-    void pushi(int);
-    void popm(int);
     void popa(int);
     void peek(String, int);
     void poke(int, String);
-    void swp();
-    void add();
-    void sub();
-    void mul();
-    void div();
     */
 
     public ArrayList<Integer> getMem() {
@@ -256,6 +268,18 @@ public class ByteCode {
                     break;
                 case "swp":
                     swp();
+                    break;
+                case "cmpe":
+                    cmpe();
+                    break;
+                case "cmpgt":
+                    cmpgt();
+                    break;
+                case "cmplt":
+                    cmplt();
+                    break;
+                case "popm":
+                    popm(Integer.parseInt(tokens[1]));
                     break;
             }
 
