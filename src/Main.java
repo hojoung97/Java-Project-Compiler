@@ -32,6 +32,7 @@ public class Main {
         if (bc.labelFlag) {
             Map<String, int[]> symbolTable = bc.getSymbolTable();
             bc = new ByteCode(inputs, symbolTable);
+            bc.removeLabel();
             bc.compile();
         }
         ArrayList<Integer> mem = bc.getMem();

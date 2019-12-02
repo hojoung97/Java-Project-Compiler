@@ -89,6 +89,7 @@ public class ByteCode {
         String key = flabel + "_" + labName;
         int[] value = {pc, 0};
         symbolTable.put(key, value);
+
     }
 
     private void subr(int count, String flabel) {
@@ -252,6 +253,16 @@ public class ByteCode {
         return mem;
     }
 
+    public void removeLabel() {
+        ArrayList<String> temp = inputStrings;
+        inputStrings = new ArrayList<String>();
+
+        for (String s : temp) {
+            if (!(s.matches("lab(.)*"))) {
+                inputStrings.add(s);
+            }
+        }
+    }
 
     public void compile() {
         // for each line
