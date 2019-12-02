@@ -253,17 +253,6 @@ public class ByteCode {
         return mem;
     }
 
-    public void removeLabel() {
-        ArrayList<String> temp = inputStrings;
-        inputStrings = new ArrayList<String>();
-
-        for (String s : temp) {
-            if (!(s.matches("lab(.)*"))) {
-                inputStrings.add(s);
-            }
-        }
-    }
-
     public void compile() {
         // for each line
         for (String line : inputStrings) {
