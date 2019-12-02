@@ -1,5 +1,6 @@
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ByteCode {
@@ -38,7 +39,7 @@ public class ByteCode {
 
     // Compiler Data Structures
     private ArrayList<String> inputStrings;                     // input lines
-    private ArrayList<Integer> mem = new ArrayList<Integer>();   // Converted Bytecode
+    private ArrayList<Integer> mem;   // Converted Bytecode
     //public Pair<Integer, Integer> symbolValue = new Pair<Integer, Integer>(0, 0);    //
     private Map<String, int[]> symbolTable;
     //public ArrayList<ArrayList<Integer>> labelValue = new ArrayList<ArrayList<Integer>>();
@@ -46,16 +47,33 @@ public class ByteCode {
 
     public ByteCode () {
         inputStrings = null;
+        symbolTable = null;
+        mem = null;
     }
 
     public ByteCode (ArrayList<String> inputSource) {
         inputStrings = inputSource;
+        symbolTable = new HashMap<String, int[]>();
+        mem = new ArrayList<Integer>();
     }
 
     // Methods for all instructions
-    private void decl(String varName, int type) {
+    private void decl(String varName, String type) {
         String key = flabel + "_" + varName;
-        int[] value = {++varNum, type};
+        int typeVal = 0;
+        switch (type) {
+            case "int":
+                typeVal = INT;
+                break;
+            case "short":
+                typeVal = SHORT;
+                break;
+            case "float":
+                typeVal = FLOAT;
+                break;
+        }
+
+        int[] value = {++varNum, typeVal};
         symbolTable.put(key, value);
         pushi(0);
     }
@@ -103,14 +121,16 @@ public class ByteCode {
     }
 
     private void popv(String varName) {
-        int value = (symbolTable.get(varName))[0];
+        String key = flabel + "_" + varName;
+        int value = (symbolTable.get(key))[0];
         pushi(value);
         mem.add(POPV);
         pc++;
     }
 
     private void printv(String varName) {
-        int value = symbolTable.get(varName)[0];
+        String key = flabel + "_" + varName;
+        int value = symbolTable.get(key)[0];
         pushi(value);
         mem.add(PUSHVI);
         mem.add(PRINTI);
@@ -163,7 +183,7 @@ public class ByteCode {
 
             switch (token) {
                 case "decl":
-                    decl(tokens[1], Integer.parseInt(tokens[2]));
+                    decl(tokens[1], tokens[2]);
                     break;
                 case "lab":
                     lab(tokens[1]);
