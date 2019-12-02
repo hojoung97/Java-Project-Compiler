@@ -165,6 +165,11 @@ public class ByteCode {
         pc++;
     }
 
+    private void swp() {
+        mem.add(SWP);
+        pc++;
+    }
+
     /*
 
     void jmp(String);
@@ -248,6 +253,9 @@ public class ByteCode {
                     break;
                 case "div":
                     div();
+                    break;
+                case "swp":
+                    swp();
                     break;
             }
 
