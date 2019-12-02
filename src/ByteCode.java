@@ -33,7 +33,7 @@ public class ByteCode {
 
     // Program variables
     private int lineNum = 0;        // current line number
-    private int pc = -1;            // Program Counter
+    private int pc = 0;            // Program Counter
     private int varNum = -1;        // Number of Local Variables
     private String flabel = "main";
     public boolean labelFlag = false;
@@ -89,7 +89,6 @@ public class ByteCode {
         String key = flabel + "_" + labName;
         int[] value = {pc, 0};
         symbolTable.put(key, value);
-
     }
 
     private void subr(int count, String flabel) {
@@ -114,7 +113,7 @@ public class ByteCode {
     private void call() {
         mem.add(CALL);
         mem.add(HALT);
-        pc++;
+        pc += 2;
     }
 
     private void printi(int value) {
@@ -208,6 +207,7 @@ public class ByteCode {
             pushi(value);
         } catch (NullPointerException e) {
             labelFlag = true;
+            pc += 5;
         }
         mem.add(JMP);
         pc += 1;
@@ -220,6 +220,7 @@ public class ByteCode {
             pushi(value);
         } catch (NullPointerException e) {
             labelFlag = true;
+            pc += 5;
         }
         mem.add(JMPC);
         pc += 1;
@@ -336,6 +337,8 @@ public class ByteCode {
                     break;
                 case "peek":
                     peek(tokens[1], Integer.parseInt(tokens[2]));
+                    break;
+                default:
                     break;
             }
 
