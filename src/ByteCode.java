@@ -58,6 +58,12 @@ public class ByteCode {
         mem = new ArrayList<Integer>();
     }
 
+    public ByteCode (ArrayList<String> inputSource, Map<String, int[]> labels) {
+        inputStrings = inputSource;
+        symbolTable = labels;
+        mem = new ArrayList<Integer>();
+    }
+
     // Methods for all instructions
     private void decl(String varName, String type) {
         String key = flabel + "_" + varName;
@@ -238,8 +244,8 @@ public class ByteCode {
         pc++;
     }
 
-    public void setMem() {
-        mem = new ArrayList<Integer>();
+    public Map<String, int[]> getSymbolTable() {
+        return symbolTable;
     }
 
     public ArrayList<Integer> getMem() {

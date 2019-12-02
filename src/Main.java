@@ -1,6 +1,7 @@
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,7 +30,8 @@ public class Main {
         // Compile the inputs into byte code
         bc.compile();
         if (bc.labelFlag) {
-            bc.setMem();
+            Map<String, int[]> symbolTable = bc.getSymbolTable();
+            bc = new ByteCode(inputs, symbolTable);
             bc.compile();
         }
         ArrayList<Integer> mem = bc.getMem();
