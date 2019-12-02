@@ -36,6 +36,7 @@ public class ByteCode {
     private int pc = -1;            // Program Counter
     private int varNum = -1;        // Number of Local Variables
     private String flabel = "main";
+    public boolean labelFlag = false;
 
     // Compiler Data Structures
     private ArrayList<String> inputStrings;                     // input lines
@@ -105,7 +106,7 @@ public class ByteCode {
 
     private void call() {
         mem.add(CALL);
-        mem.add(0);
+        mem.add(HALT);
         pc++;
     }
 
@@ -190,20 +191,31 @@ public class ByteCode {
     private void popm(int value) {
         pushi(value);
         mem.add(POPM);
+        pc += 1;
     }
 
     private void jmp(String labName) {
         String key = flabel + "_" + labName;
-        int value = symbolTable.get(key)[0];
-        pushi(value);
+        try {
+            int value = symbolTable.get(key)[0];
+            pushi(value);
+        } catch (NullPointerException e) {
+            labelFlag = true;
+        }
         mem.add(JMP);
+        pc += 1;
     }
 
     private void jmpc(String labName) {
         String key = flabel + "_" + labName;
-        int value = symbolTable.get(key)[0];
-        pushi(value);
+        try {
+            int value = symbolTable.get(key)[0];
+            pushi(value);
+        } catch (NullPointerException e) {
+            labelFlag = true;
+        }
         mem.add(JMPC);
+        pc += 1;
     }
 
     private void poke(int value, String varName) {
@@ -226,41 +238,14 @@ public class ByteCode {
         pc++;
     }
 
-    /*
-
-    void jmp(String);
-    void jmpc(String);
-    void popa(int);
-    void peek(String, int);
-    void poke(int, String);
-    */
+    public void setMem() {
+        mem = new ArrayList<Integer>();
+    }
 
     public ArrayList<Integer> getMem() {
         return mem;
     }
 
-    public int getpc() {
-        return pc;
-    }
-
-    public void findLabel() {
-        for (String line : inputStrings) {
-            // ignore comments
-            if (line.matches("\\/\\/(.)*")) {
-                continue;
-            }
-            // parsing the line
-            lineNum++;
-            line = line.trim();
-            line = line.replaceAll(",", " , ");
-            String[] tokens = line.split("\\s");
-
-            // ignore anything other than label
-            if (tokens[0].matches("lab")) {
-                lab(tokens[1]);
-            }
-        }
-    }
 
     public void compile() {
         // for each line
@@ -350,5 +335,4 @@ public class ByteCode {
 
         }
     }
-
 }

@@ -28,6 +28,10 @@ public class Main {
         ByteCode bc = new ByteCode(inputs);
         // Compile the inputs into byte code
         bc.compile();
+        if (bc.labelFlag) {
+            bc.setMem();
+            bc.compile();
+        }
         ArrayList<Integer> mem = bc.getMem();
 
 
