@@ -79,7 +79,9 @@ public class ByteCode {
     }
 
     private void lab(String labName) {
-
+        String key = flabel + "_" + labName;
+        int[] value = {pc, 0};
+        symbolTable.put(key, value);
     }
 
     private void subr(int count, String flabel) {
@@ -190,7 +192,39 @@ public class ByteCode {
         mem.add(POPM);
     }
 
+    private void jmp(String labName) {
+        String key = flabel + "_" + labName;
+        int value = symbolTable.get(key)[0];
+        pushi(value);
+        mem.add(JMP);
+    }
 
+    private void jmpc(String labName) {
+        String key = flabel + "_" + labName;
+        int value = symbolTable.get(key)[0];
+        pushi(value);
+        mem.add(JMPC);
+    }
+
+    private void poke(int value, String varName) {
+        String key = flabel + "_" + varName;
+        int keyValue = symbolTable.get(key)[0];
+
+        pushi(keyValue);
+        pushi(value);
+        mem.add(POKEI);
+        pc++;
+    }
+
+    private void peek(String varName, int value) {
+        String key = flabel + "_" + varName;
+        int keyValue = symbolTable.get(key)[0];
+
+        pushi(keyValue);
+        pushi(value);
+        mem.add(PEEKI);
+        pc++;
+    }
 
     /*
 
@@ -207,6 +241,25 @@ public class ByteCode {
 
     public int getpc() {
         return pc;
+    }
+
+    public void findLabel() {
+        for (String line : inputStrings) {
+            // ignore comments
+            if (line.matches("\\/\\/(.)*")) {
+                continue;
+            }
+            // parsing the line
+            lineNum++;
+            line = line.trim();
+            line = line.replaceAll(",", " , ");
+            String[] tokens = line.split("\\s");
+
+            // ignore anything other than label
+            if (tokens[0].matches("lab")) {
+                lab(tokens[1]);
+            }
+        }
     }
 
     public void compile() {
@@ -280,6 +333,18 @@ public class ByteCode {
                     break;
                 case "popm":
                     popm(Integer.parseInt(tokens[1]));
+                    break;
+                case "jmp":
+                    jmp(tokens[1]);
+                    break;
+                case "jmpc":
+                    jmpc(tokens[1]);
+                    break;
+                case "poke":
+                    poke(Integer.parseInt(tokens[1]), tokens[2]);
+                    break;
+                case "peek":
+                    peek(tokens[1], Integer.parseInt(tokens[2]));
                     break;
             }
 
