@@ -57,7 +57,9 @@ public class ByteCode {
     // Methods for all instructions
     private void decl(String varName, int type) {
         String key = flabel + "_" + varName;
-        //symbolTable.put(key, {++varNum, });
+        int[] value = {++varNum, type};
+        symbolTable.put(key, value);
+        pushi(0);
     }
 
     private void lab(String labName) {
@@ -102,6 +104,21 @@ public class ByteCode {
         pc += 2;
     }
 
+    private void popv(String varName) {
+        int value = (symbolTable.get(varName))[0];
+        pushi(value);
+        mem.add(POPV);
+        pc++;
+    }
+
+    private void printv(String varName) {
+        int value = symbolTable.get(varName)[0];
+        pushi(value);
+        mem.add(PUSHVI);
+        mem.add(PRINTI);
+        pc += 2;
+    }
+
     /*
 
     void jmp(String);
@@ -112,7 +129,6 @@ public class ByteCode {
     void pushi(int);
     void popm(int);
     void popa(int);
-    void popv(String);
     void peek(String, int);
     void poke(int, String);
     void swp();
@@ -162,6 +178,12 @@ public class ByteCode {
                     break;
                 case "ret":
                     ret();
+                    break;
+                case "popv":
+                    popv(tokens[1]);
+                    break;
+                case "printv":
+                    printv(tokens[1]);
                     break;
             }
 
