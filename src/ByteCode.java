@@ -145,6 +145,26 @@ public class ByteCode {
         pc += 1;
     }
 
+    private void add() {
+        mem.add(ADD);
+        pc++;
+    }
+
+    private void sub() {
+        mem.add(SUB);
+        pc++;
+    }
+
+    private void mul() {
+        mem.add(MUL);
+        pc++;
+    }
+
+    private void div() {
+        mem.add(DIV);
+        pc++;
+    }
+
     /*
 
     void jmp(String);
@@ -216,6 +236,18 @@ public class ByteCode {
                     break;
                 case "pushv":
                     pushv(tokens[1]);
+                    break;
+                case "add":
+                    add();
+                    break;
+                case "sub":
+                    sub();
+                    break;
+                case "mul":
+                    mul();
+                    break;
+                case "div":
+                    div();
                     break;
             }
 
