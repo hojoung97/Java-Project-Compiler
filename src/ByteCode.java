@@ -137,6 +137,14 @@ public class ByteCode {
         pc += 2;
     }
 
+    private void pushv(String varName) {
+        String key = flabel + "_" + varName;
+        int value = symbolTable.get(key)[0];
+        pushi(value);
+        mem.add(PUSHVI);
+        pc += 1;
+    }
+
     /*
 
     void jmp(String);
@@ -202,6 +210,12 @@ public class ByteCode {
                     break;
                 case "printv":
                     printv(tokens[1]);
+                    break;
+                case "pushi":
+                    pushi(Integer.parseInt(tokens[1]));
+                    break;
+                case "pushv":
+                    pushv(tokens[1]);
                     break;
             }
 
