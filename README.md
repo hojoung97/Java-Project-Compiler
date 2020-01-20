@@ -16,9 +16,7 @@ contains all the Java source files
 
 ### How to Run
 - 2 arguments - 1. *input.txt* (contains instructions in text)
-\t\t
-- Input: a binary file (usually with .smp file extension) containing the byte code instructions
-- Output: currently, output is set to be printed to standard out
+                2. *output.smp* (containing compiled bytecode)
 
 ### Instructions Supported
 There are too many so I will try to update them later... (coming soon)
