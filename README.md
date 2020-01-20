@@ -15,6 +15,8 @@ Yul Hee Cho - BS Computer Engineering 2021
 contains all the Java source files
 
 ### How to Run
+- 2 arguments - 1. *input.txt* (contains instructions in text)
+\t\t
 - Input: a binary file (usually with .smp file extension) containing the byte code instructions
 - Output: currently, output is set to be printed to standard out
 
