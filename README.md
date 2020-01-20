@@ -12,12 +12,9 @@ Yul Hee Cho - BS Computer Engineering 2021
 
 ### Contents
 - src 
-contains all the .h header and .cpp source files
-- interpreter
-the interpreter executable
+contains all the Java source files
 
 ### How to Run
-./interpreter *input binary file name (.smp)*
 - Input: a binary file (usually with .smp file extension) containing the byte code instructions
 - Output: currently, output is set to be printed to standard out
 
