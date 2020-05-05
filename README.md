@@ -13,5 +13,3 @@ contains all the Java source files
 - 2 arguments - 1. *input.txt* (contains instructions in text)
                 2. *output.smp* (containing compiled bytecode)
 
-### Instructions Supported
-There are too many so I will try to update them later... (coming soon)
